@@ -59,7 +59,9 @@ export default function Checkout() {
     );
   }
 
-  const qrCodePlaceholder = `https://qr.sepay.vn/img?bank=${bankAcc.bankName}&acc=${bankAcc.accountNumber}&template=compact&amount=${document.price}&des=${orderId}`;
+  const bankName = import.meta.env.VITE_BANK_NAME;
+  const accountNumber = import.meta.env.VITE_BANK_ACCOUNT;
+  const qrCodePlaceholder = `https://qr.sepay.vn/img?bank=${bankName}&acc=${accountNumber}&template=compact&amount=${document.price}&des=${orderId}`;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">

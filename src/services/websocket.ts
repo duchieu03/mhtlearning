@@ -9,9 +9,9 @@ export class PaymentWebSocket {
   private description: string;
   private messageHandlers: MessageHandler[] = [];
 
-  constructor(description: string, endpoint = "http://localhost:8081/ws") {
+  constructor(description: string, endpoint?: string) {
     this.description = description;
-    this.endpoint = endpoint;
+    this.endpoint = endpoint || import.meta.env.VITE_WS_ENDPOINT;
   }
 
   connect() {

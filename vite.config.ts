@@ -8,6 +8,6 @@ export default defineConfig({
     exclude: ['lucide-react'],
   },
   define: {
-    global: "window", // 👈 Fix SockJS requires 'global'
+    global: "window", 
   },
 });
