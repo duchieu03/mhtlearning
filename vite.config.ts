@@ -10,4 +10,7 @@ export default defineConfig({
   define: {
     global: "window", // 👈 Fix SockJS requires 'global'
   },
+  build: {
+    outDir: 'dist',  // 👈 Thư mục build
+  },
 });
