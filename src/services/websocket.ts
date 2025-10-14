@@ -11,7 +11,7 @@ export class PaymentWebSocket {
 
   constructor(description: string, endpoint?: string) {
     this.description = description;
-    this.endpoint = endpoint || import.meta.env.VITE_WS_ENDPOINT;
+    this.endpoint = endpoint || import.meta.env.VITE_ENDPOINT + '/ws';
   }
 
   connect() {
@@ -22,8 +22,7 @@ export class PaymentWebSocket {
 
     this.stompClient = new Client({
       webSocketFactory: () => new SockJS(this.endpoint),
-      reconnectDelay: 5000, // tự động reconnect sau 5s
-      debug: () => {}, // tắt debug log
+      debug: () => {}, 
     });
 
     this.stompClient.onConnect = (frame) => {

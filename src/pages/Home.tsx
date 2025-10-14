@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Search, Filter } from 'lucide-react';
 import { sampleDocuments } from '../data/sampleDocuments';
 import Header from "../components/Header";
 

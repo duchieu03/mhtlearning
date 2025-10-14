@@ -13,13 +13,13 @@ export default function DocumentDetail() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">
-            Document not found
+            Không tìm thấy tài liệu
           </h2>
           <button
             onClick={() => navigate("/")}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Back to Home
+            Quay lại trang chủ
           </button>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default function DocumentDetail() {
           className="flex items-center space-x-2 text-slate-600 hover:text-slate-900 transition-colors group"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-medium">Back to Documents</span>
+          <span className="font-medium">Quay lại danh sách tài liệu</span>
         </button>
       </div>
 
@@ -59,7 +59,7 @@ export default function DocumentDetail() {
               <div>
                 <div className="flex items-center space-x-2 text-slate-600 mb-4">
                   <User className="w-4 h-4" />
-                  <span className="text-sm">by {document.author}</span>
+                  <span className="text-sm">Tác giả: {document.author}</span>
                 </div>
 
                 <h1 className="text-4xl font-bold text-slate-900 mb-6 leading-tight">
@@ -75,11 +75,11 @@ export default function DocumentDetail() {
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center space-x-3 text-slate-600">
                     <BookOpen className="w-5 h-5 text-blue-600" />
-                    <span>Comprehensive learning material</span>
+                    <span>Tài liệu học tập đầy đủ, chi tiết</span>
                   </div>
                   <div className="flex items-center space-x-3 text-slate-600">
                     <Tag className="w-5 h-5 text-blue-600" />
-                    <span>Instant digital access</span>
+                    <span>Truy cập kỹ thuật số ngay sau khi thanh toán</span>
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function DocumentDetail() {
               <div className="border-t border-slate-200 pt-8 mt-8">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <p className="text-sm text-slate-500 mb-1">Price</p>
+                    <p className="text-sm text-slate-500 mb-1">Giá</p>
                     <p className="text-4xl font-bold text-slate-900">
                       ${document.price}
                     </p>
@@ -99,11 +99,11 @@ export default function DocumentDetail() {
                   className="w-full flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl font-semibold text-lg"
                 >
                   <ShoppingCart className="w-6 h-6" />
-                  <span>Proceed to Checkout</span>
+                  <span>Tiến hành thanh toán</span>
                 </button>
 
                 <p className="text-center text-sm text-slate-500 mt-4">
-                  Secure payment • Instant access
+                  Thanh toán an toàn • Truy cập tức thì
                 </p>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function DocumentDetail() {
 
         <div className="mt-12 bg-white rounded-2xl shadow-md p-8 border border-slate-100">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">
-            What You'll Learn
+            Bạn sẽ học được gì
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start space-x-3">
@@ -120,7 +120,7 @@ export default function DocumentDetail() {
                 <span className="text-blue-600 font-bold text-sm">✓</span>
               </div>
               <p className="text-slate-700">
-                Expert knowledge and industry best practices
+                Kiến thức chuyên sâu và các thực tiễn tốt nhất trong ngành
               </p>
             </div>
             <div className="flex items-start space-x-3">
@@ -128,7 +128,7 @@ export default function DocumentDetail() {
                 <span className="text-blue-600 font-bold text-sm">✓</span>
               </div>
               <p className="text-slate-700">
-                Practical examples and real-world applications
+                Ví dụ thực tế và các ứng dụng trong đời sống
               </p>
             </div>
             <div className="flex items-start space-x-3">
@@ -136,14 +136,16 @@ export default function DocumentDetail() {
                 <span className="text-blue-600 font-bold text-sm">✓</span>
               </div>
               <p className="text-slate-700">
-                Step-by-step guidance for implementation
+                Hướng dẫn chi tiết từng bước triển khai
               </p>
             </div>
             <div className="flex items-start space-x-3">
               <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
                 <span className="text-blue-600 font-bold text-sm">✓</span>
               </div>
-              <p className="text-slate-700">Resources for continued learning</p>
+              <p className="text-slate-700">
+                Tài nguyên học tập mở rộng để nâng cao kiến thức
+              </p>
             </div>
           </div>
         </div>
