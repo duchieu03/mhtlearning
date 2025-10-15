@@ -89,7 +89,7 @@ export default function DocumentDetail() {
                   <div>
                     <p className="text-sm text-slate-500 mb-1">Giá</p>
                     <p className="text-4xl font-bold text-slate-900">
-                      ${document.price}
+                      {document.price.toLocaleString("vi-VN")}₫
                     </p>
                   </div>
                 </div>

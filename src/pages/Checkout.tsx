@@ -231,27 +231,6 @@ export default function Checkout() {
                 </div>
               )}
 
-              {/* Trạng thái sheet */}
-              {paymentStatus === "completed" && (
-                <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-4 text-center">
-                  {sheetStatus === "processing" && (
-                    <p className="text-green-700 font-medium">Đang chuẩn bị tài liệu...</p>
-                  )}
-                  {sheetStatus === "error" && (
-                    <p className="text-red-600 font-medium">Có lỗi khi chuẩn bị tài liệu. Vui lòng liên hệ với chăm sóc khách hàng.</p>
-                  )}
-                  {sheetStatus === "completed" && sheetLink && (
-                    <a
-                      href={sheetLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-green-800 hover:underline break-all"
-                    >
-                      Tải tài liệu của bạn tại đây
-                    </a>
-                  )}
-                </div>
-              )}
             </div>
           </div>
 
@@ -278,15 +257,15 @@ export default function Checkout() {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-slate-600">
                   <span>Tạm tính</span>
-                  <span className="font-medium">${document.price}</span>
+                  <span className="font-medium">{document.price.toLocaleString("vi-VN")}₫</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
                   <span>Thuế</span>
-                  <span className="font-medium">0.00VNĐ</span>
+                  <span className="font-medium">0₫</span>
                 </div>
                 <div className="border-t border-slate-200 pt-3 flex justify-between text-lg">
                   <span className="font-bold text-slate-900">Tổng cộng</span>
-                  <span className="font-bold text-slate-900">${document.price}</span>
+                  <span className="font-bold text-slate-900">{document.price.toLocaleString("vi-VN")}₫</span>
                 </div>
               </div>
 
@@ -295,6 +274,28 @@ export default function Checkout() {
                   Sau khi thanh toán thành công, bạn sẽ được truy cập và tải về tài liệu cùng toàn bộ nội dung liên quan.
                 </p>
               </div>
+
+              {/* Trạng thái sheet */}
+              {paymentStatus === "completed" && (
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-4 text-center">
+                  {sheetStatus === "processing" && (
+                    <p className="text-green-700 font-medium">Đang chuẩn bị tài liệu...</p>
+                  )}
+                  {sheetStatus === "error" && (
+                    <p className="text-red-600 font-medium">Có lỗi khi chuẩn bị tài liệu. Vui lòng liên hệ với chăm sóc khách hàng.</p>
+                  )}
+                  {sheetStatus === "completed" && sheetLink && (
+                    <a
+                      href={sheetLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-800 hover:underline break-all"
+                    >
+                      Tải tài liệu của bạn tại đây
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

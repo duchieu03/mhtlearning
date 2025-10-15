@@ -11,10 +11,10 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-10">
           <h2 className="text-4xl font-bold text-slate-900 mb-3">
-            Expand Your Knowledge
+            Mở Rộng Kiến Thức Của Bạn
           </h2>
           <p className="text-lg text-slate-600">
-            Browse our curated collection of professional learning documents
+            Khám phá bộ sưu tập tài liệu học tập chuyên nghiệp được chọn lọc của chúng tôi
           </p>
         </div>
 
@@ -39,16 +39,16 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
                   {doc.title}
                 </h3>
-                <p className="text-sm text-slate-500 mb-3">by {doc.author}</p>
+                <p className="text-sm text-slate-500 mb-3">Tác giả: {doc.author}</p>
                 <p className="text-slate-600 mb-4 line-clamp-2 leading-relaxed">
                   {doc.description}
                 </p>
                 <div className="flex items-center justify-between pt-4 border-t border-slate-100">
                   <span className="text-2xl font-bold text-slate-900">
-                    ${doc.price}
+                    {doc.price.toLocaleString("vi-VN")}₫
                   </span>
                   <button className="px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg font-medium">
-                    View Details
+                    Xem Chi Tiết
                   </button>
                 </div>
               </div>
@@ -60,7 +60,7 @@ export default function Home() {
       <footer className="bg-white border-t border-slate-200 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-slate-600">
-            © 2025 DocuLearn. Premium educational resources for lifelong learners.
+            © 2025 DocuLearn. Tài nguyên học tập cao cấp dành cho những người học suốt đời.
           </p>
         </div>
       </footer>
