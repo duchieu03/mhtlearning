@@ -35,15 +35,18 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { documentId } = useParams<{ documentId: string }>();
   const [sheetLink, setSheetLink] = useState<string | null>(null);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [paymentStatus, setPaymentStatus] = useState<"pending" | "completed">("pending");
+  const [paymentStatus, setPaymentStatus] = useState<"pending" | "completed">(
+    "pending"
+  );
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [orderCode, setOrderCode] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Thêm state quản lý trạng thái sheet
-  const [sheetStatus, setSheetStatus] = useState<"pending" | "processing" | "completed" | "error">("pending");
+  const [sheetStatus, setSheetStatus] = useState<
+    "pending" | "processing" | "completed" | "error"
+  >("pending");
 
   const document = sampleDocuments.find((doc) => doc.id === documentId);
 
@@ -79,7 +82,6 @@ export default function Checkout() {
         if (data.code === 0) {
           setQrCode(data.data.qrCode);
           setOrderCode(data.data.orderCode);
-          setCheckoutUrl(data.data.checkoutUrl);
 
           const ws = new PaymentWebSocket(data.data.orderCode.toString());
 
@@ -95,18 +97,20 @@ export default function Checkout() {
             } else parsed = msg;
 
             const now = new Date();
-            console.log(`Bây giờ: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+            console.log(
+              `Bây giờ: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+            );
             console.log("Webhook WS:", parsed);
 
             if (parsed.link === "processing") {
               setSheetStatus("processing");
-              setShowSuccessModal(prev => prev || true);
+              setShowSuccessModal((prev) => prev || true);
               return;
             }
 
             if (parsed.link === "error") {
               setSheetStatus("error");
-              setShowSuccessModal(prev => prev || true);
+              setShowSuccessModal((prev) => prev || true);
               return;
             }
 
@@ -114,7 +118,7 @@ export default function Checkout() {
               setSheetLink(parsed.link);
               setSheetStatus("completed");
               setPaymentStatus("completed");
-              setShowSuccessModal(prev => prev || true);
+              setShowSuccessModal((prev) => prev || true);
             }
           });
 
@@ -179,7 +183,9 @@ export default function Checkout() {
               <div className="bg-blue-100 p-2 rounded-lg">
                 <CreditCard className="w-6 h-6 text-blue-600" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-900">Thông tin thanh toán</h2>
+              <h2 className="text-2xl font-bold text-slate-900">
+                Thông tin thanh toán
+              </h2>
             </div>
 
             <div className="space-y-6">
@@ -191,7 +197,9 @@ export default function Checkout() {
                 </div>
 
                 {loading ? (
-                  <p className="text-center text-slate-500">Đang tạo mã QR...</p>
+                  <p className="text-center text-slate-500">
+                    Đang tạo mã QR...
+                  </p>
                 ) : qrCode ? (
                   <>
                     <h3 className="text-lg font-semibold text-slate-900 text-center mb-4">
@@ -205,21 +213,53 @@ export default function Checkout() {
                     </p>
                   </>
                 ) : (
-                  <p className="text-center text-red-500">Không thể tạo mã QR</p>
+                  <p className="text-center text-red-500">
+                    Không thể tạo mã QR
+                  </p>
                 )}
               </div>
 
-              <div className="flex items-center justify-center space-x-2 text-slate-600">
-                {paymentStatus === "pending" ? (
-                  <>
+              <div className="flex flex-col items-center justify-center space-y-1 text-slate-600">
+                {sheetStatus === "pending" ? (
+                  <div className="flex items-center space-x-2">
                     <Clock className="w-5 h-5 animate-pulse text-amber-500" />
                     <span className="font-medium">Đang chờ thanh toán...</span>
-                  </>
+                  </div>
+                ) : sheetStatus === "error" ? (
+                  <div className="flex flex-col items-center space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                      <span className="font-medium text-green-600">
+                        Đã nhận thanh toán!
+                      </span>
+                    </div>
+                    <p className="text-red-500 text-sm font-medium">
+                      Xảy ra lỗi khi xử lý tài liệu. Vui lòng liên hệ CSKH!
+                    </p>
+                  </div>
                 ) : (
-                  <>
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="font-medium text-green-600">Đã nhận thanh toán!</span>
-                  </>
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                      <span className="font-medium text-green-600">
+                        Đã nhận thanh toán!
+                      </span>
+                    </div>
+
+                    <div className="mt-3">
+                      <p className="text-slate-700 mb-1 font-semibold">
+                        Tệp Google Sheet của bạn:
+                      </p>
+                      <a
+                        href={sheetLink || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 underline break-all transition-colors duration-150"
+                      >
+                        {sheetLink || "Liên kết chưa sẵn sàng"}
+                      </a>
+                    </div>
+                  </div>
                 )}
               </div>
 
@@ -230,14 +270,15 @@ export default function Checkout() {
                   </p>
                 </div>
               )}
-
             </div>
           </div>
 
           {/* Tóm tắt đơn hàng */}
           <div className="space-y-6">
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">Tóm tắt đơn hàng</h2>
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">
+                Tóm tắt đơn hàng
+              </h2>
 
               <div className="flex items-start space-x-4 mb-6 pb-6 border-b border-slate-200">
                 <img
@@ -246,8 +287,12 @@ export default function Checkout() {
                   className="w-24 h-24 object-cover rounded-lg"
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-slate-900 mb-1">{document.title}</h3>
-                  <p className="text-sm text-slate-500 mb-2">Tác giả: {document.author}</p>
+                  <h3 className="font-semibold text-slate-900 mb-1">
+                    {document.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 mb-2">
+                    Tác giả: {document.author}
+                  </p>
                   <span className="inline-block px-3 py-1 bg-blue-100 text-blue-600 text-xs font-medium rounded-full">
                     {document.category}
                   </span>
@@ -257,7 +302,9 @@ export default function Checkout() {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-slate-600">
                   <span>Tạm tính</span>
-                  <span className="font-medium">{document.price.toLocaleString("vi-VN")}₫</span>
+                  <span className="font-medium">
+                    {document.price.toLocaleString("vi-VN")}₫
+                  </span>
                 </div>
                 <div className="flex justify-between text-slate-600">
                   <span>Thuế</span>
@@ -265,13 +312,16 @@ export default function Checkout() {
                 </div>
                 <div className="border-t border-slate-200 pt-3 flex justify-between text-lg">
                   <span className="font-bold text-slate-900">Tổng cộng</span>
-                  <span className="font-bold text-slate-900">{document.price.toLocaleString("vi-VN")}₫</span>
+                  <span className="font-bold text-slate-900">
+                    {document.price.toLocaleString("vi-VN")}₫
+                  </span>
                 </div>
               </div>
 
               <div className="bg-slate-50 rounded-xl p-4">
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Sau khi thanh toán thành công, bạn sẽ được truy cập và tải về tài liệu cùng toàn bộ nội dung liên quan.
+                  Sau khi thanh toán thành công, bạn sẽ được truy cập và tải về
+                  tài liệu cùng toàn bộ nội dung liên quan.
                 </p>
               </div>
 
@@ -279,10 +329,15 @@ export default function Checkout() {
               {paymentStatus === "completed" && (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-4 text-center">
                   {sheetStatus === "processing" && (
-                    <p className="text-green-700 font-medium">Đang chuẩn bị tài liệu...</p>
+                    <p className="text-green-700 font-medium">
+                      Đang chuẩn bị tài liệu...
+                    </p>
                   )}
                   {sheetStatus === "error" && (
-                    <p className="text-red-600 font-medium">Có lỗi khi chuẩn bị tài liệu. Vui lòng liên hệ với chăm sóc khách hàng.</p>
+                    <p className="text-red-600 font-medium">
+                      Có lỗi khi chuẩn bị tài liệu. Vui lòng liên hệ với chăm
+                      sóc khách hàng.
+                    </p>
                   )}
                   {sheetStatus === "completed" && sheetLink && (
                     <a
@@ -316,7 +371,8 @@ export default function Checkout() {
               Thanh toán thành công!
             </h2>
             <p className="text-slate-600 text-center mb-8 leading-relaxed">
-              Thanh toán của bạn đã được xử lý thành công. Bạn hiện có quyền truy cập vào <strong>{document.title}</strong>.
+              Thanh toán của bạn đã được xử lý thành công. Bạn hiện có quyền
+              truy cập vào <strong>{document.title}</strong>.
             </p>
 
             {/* Phần nội dung sheet */}
@@ -324,20 +380,27 @@ export default function Checkout() {
               {sheetStatus === "processing" && (
                 <div className="flex flex-col items-center space-y-4">
                   <div className="w-12 h-12 border-4 border-blue-300 border-t-blue-600 rounded-full animate-spin"></div>
-                  <p className="text-green-700 font-medium">Đang chuẩn bị tài liệu...</p>
-                  <p className="text-sm text-slate-500">Vui lòng chờ trong giây lát</p>
+                  <p className="text-green-700 font-medium">
+                    Đang chuẩn bị tài liệu...
+                  </p>
+                  <p className="text-sm text-slate-500">
+                    Vui lòng chờ trong giây lát
+                  </p>
                 </div>
               )}
 
               {sheetStatus === "error" && (
                 <p className="text-red-600 font-medium">
-                  Có lỗi khi chuẩn bị tài liệu. Vui lòng liên hệ với chăm sóc khách hàng.
+                  Có lỗi khi chuẩn bị tài liệu. Vui lòng liên hệ với chăm sóc
+                  khách hàng.
                 </p>
               )}
 
               {sheetStatus === "completed" && sheetLink && (
                 <div className="mt-4">
-                  <p className="text-slate-700 mb-2 font-medium">Tệp Google Sheet của bạn:</p>
+                  <p className="text-slate-700 mb-2 font-medium">
+                    Tệp Google Sheet của bạn:
+                  </p>
                   <a
                     href={sheetLink}
                     target="_blank"
@@ -359,7 +422,6 @@ export default function Checkout() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
